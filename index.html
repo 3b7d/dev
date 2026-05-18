@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevHub | مركز إدارة قسم التطوير</title>
+    <script>
+      tailwind = {
+        config: {
+          theme: {
+            extend: {
+              colors: {
+                devbg: "#050816",
+                electric: "#3B82F6",
+                cyanx: "#22D3EE",
+                success: "#10B981",
+                ink: "#F8FAFC",
+                muted: "#94A3B8",
+              },
+              fontFamily: {
+                sans: ["Tajawal", "Inter", "ui-sans-serif", "system-ui"],
+              },
+              boxShadow: {
+                glow: "0 0 34px rgba(34, 211, 238, .18)",
+                card: "0 24px 80px rgba(0, 0, 0, .36)",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="min-h-screen bg-devbg font-sans text-ink antialiased">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient-grid"></div>
+
+    <div class="app-shell">
+      <aside class="sidebar glass-panel" id="sidebar" aria-label="القائمة الرئيسية">
+        <div class="brand">
+          <div class="brand-mark">DH</div>
+          <div>
+            <p class="brand-title">DevHub</p>
+            <p class="brand-subtitle">مركز إدارة التطوير</p>
+          </div>
+        </div>
+
+        <nav class="nav-list" id="navList">
+          <button class="nav-item active" data-view="dashboard">
+            <span class="nav-icon" data-icon="layout-dashboard"></span>
+            <span>لوحة التحكم</span>
+          </button>
+          <button class="nav-item" data-view="tasks">
+            <span class="nav-icon" data-icon="list-checks"></span>
+            <span>المهام</span>
+          </button>
+          <button class="nav-item" data-view="achievements">
+            <span class="nav-icon" data-icon="sparkles"></span>
+            <span>إنجازات اليوم</span>
+          </button>
+          <button class="nav-item" data-view="projects">
+            <span class="nav-icon" data-icon="kanban-square"></span>
+            <span>المشاريع</span>
+          </button>
+          <button class="nav-item" data-view="courses">
+            <span class="nav-icon" data-icon="graduation-cap"></span>
+            <span>الدورات</span>
+          </button>
+          <button class="nav-item" data-view="reports">
+            <span class="nav-icon" data-icon="bar-chart-3"></span>
+            <span>التقارير</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-card">
+          <div class="sidebar-card-head">
+            <span class="status-dot"></span>
+            <span>صحة الفريق</span>
+          </div>
+          <strong>92%</strong>
+          <p>التقدم مستقر، مع عائق واحد يحتاج متابعة.</p>
+          <div class="progress-track">
+            <span style="width: 92%"></span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar glass-panel">
+          <button class="icon-button lg:hidden" id="menuToggle" aria-label="فتح القائمة">
+            <span data-icon="menu"></span>
+          </button>
+
+          <div class="search-box">
+            <span data-icon="search"></span>
+            <input type="search" placeholder="ابحث عن مهمة، مشروع، تقرير..." />
+            <kbd>⌘ K</kbd>
+          </div>
+
+          <div class="topbar-actions">
+            <button class="icon-button" aria-label="الإشعارات">
+              <span data-icon="bell"></span>
+              <span class="notify-dot"></span>
+            </button>
+            <button class="quick-add">
+              <span data-icon="plus"></span>
+              <span>إضافة سريعة</span>
+            </button>
+            <div class="user-chip">
+              <div class="avatar">م</div>
+              <div>
+                <strong>مدير التطوير</strong>
+                <span>Admin</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="view active" id="dashboard">
+          <div class="hero glass-panel">
+            <div class="hero-content">
+              <span class="eyebrow">DevHub Command Center</span>
+              <h1>لوحة قيادة ذكية لفريق تطوير صغير يعمل بسرعة فريق كبير.</h1>
+              <p>
+                متابعة المهام، الإنجازات، المشاريع، الدورات والتقارير من مساحة واحدة مصممة للإدارة اليومية
+                واتخاذ القرار.
+              </p>
+              <div class="hero-actions">
+                <button class="primary-button"><span data-icon="rocket"></span> بدء يوم العمل</button>
+                <button class="ghost-button"><span data-icon="file-text"></span> تجهيز تقرير</button>
+              </div>
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+              <div class="orbit-card orbit-main">
+                <span>المهام المكتملة</span>
+                <strong>38</strong>
+                <div class="mini-bars">
+                  <i></i><i></i><i></i><i></i><i></i>
+                </div>
+              </div>
+              <div class="orbit-card orbit-small">
+                <span>سرعة الإنجاز</span>
+                <strong>+24%</strong>
+              </div>
+              <div class="pulse-ring"></div>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <article class="stat-card glass-card">
+              <div class="stat-icon blue"><span data-icon="check-circle-2"></span></div>
+              <span>مهام اليوم</span>
+              <strong>14</strong>
+              <p><b>9</b> مكتملة حتى الآن</p>
+            </article>
+            <article class="stat-card glass-card">
+              <div class="stat-icon cyan"><span data-icon="timer"></span></div>
+              <span>قيد التنفيذ</span>
+              <strong>6</strong>
+              <p>متوسط الإنجاز 72%</p>
+            </article>
+            <article class="stat-card glass-card">
+              <div class="stat-icon green"><span data-icon="folder-git-2"></span></div>
+              <span>المشاريع النشطة</span>
+              <strong>4</strong>
+              <p>مشروعان في مرحلة الإطلاق</p>
+            </article>
+            <article class="stat-card glass-card">
+              <div class="stat-icon amber"><span data-icon="triangle-alert"></span></div>
+              <span>العوائق</span>
+              <strong>1</strong>
+              <p>بانتظار اعتماد من الإدارة</p>
+            </article>
+          </div>
+
+          <div class="dashboard-grid">
+            <section class="glass-card panel-span">
+              <div class="section-head">
+                <div>
+                  <span class="eyebrow">Workflow</span>
+                  <h2>تدفق المهام الحالي</h2>
+                </div>
+                <button class="soft-button">عرض الكل</button>
+              </div>
+              <div class="kanban compact">
+                <div class="kanban-col">
+                  <div class="kanban-title"><span>قيد التخطيط</span><b>3</b></div>
+                  <div class="task-ticket"><span class="badge blue">واجهة</span><strong>تحسين تجربة لوحة التحكم</strong><p>تصميم كروت إحصائية أكثر وضوحًا</p></div>
+                  <div class="task-ticket"><span class="badge purple">بحث</span><strong>مراجعة متطلبات التقارير</strong><p>تحديد حقول التقرير الأسبوعي</p></div>
+                </div>
+                <div class="kanban-col">
+                  <div class="kanban-title"><span>قيد التنفيذ</span><b>4</b></div>
+                  <div class="task-ticket hot"><span class="badge cyan">MVP</span><strong>بناء Kanban Board</strong><p>سحب وإفلات لاحقًا، عرض الآن</p></div>
+                  <div class="task-ticket"><span class="badge green">Auth</span><strong>تصميم صلاحيات الأدوار</strong><p>Admin, Lead, Member, Viewer</p></div>
+                </div>
+                <div class="kanban-col">
+                  <div class="kanban-title"><span>مراجعة</span><b>2</b></div>
+                  <div class="task-ticket"><span class="badge amber">UI</span><strong>مراجعة ألوان الهوية</strong><p>تباين النصوص والحالات</p></div>
+                </div>
+              </div>
+            </section>
+
+            <aside class="glass-card focus-panel">
+              <div class="section-head tight">
+                <div>
+                  <span class="eyebrow">Today</span>
+                  <h2>تركيز اليوم</h2>
+                </div>
+              </div>
+              <div class="focus-list">
+                <div><span class="check-dot done"></span><p>إنهاء تصميم Dashboard</p></div>
+                <div><span class="check-dot"></span><p>تدقيق جدول المهام</p></div>
+                <div><span class="check-dot"></span><p>تحضير تقرير موجز للإدارة</p></div>
+              </div>
+              <div class="radial">
+                <div class="radial-core">76%</div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="tasks">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">Task Operations</span>
+              <h1>المهام</h1>
+              <p>جدول عصري ولوحة Kanban لمتابعة اليوم بسرعة ووضوح.</p>
+            </div>
+            <button class="primary-button"><span data-icon="plus"></span> مهمة جديدة</button>
+          </div>
+
+          <div class="glass-card table-card">
+            <div class="section-head">
+              <div>
+                <h2>جدول المهام</h2>
+                <p>عرض مكثف للحالات، الأولويات، المسؤول والتقدم.</p>
+              </div>
+              <div class="segmented">
+                <button class="active">الكل</button>
+                <button>اليوم</button>
+                <button>متأخر</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>المهمة</th>
+                    <th>المشروع</th>
+                    <th>المسؤول</th>
+                    <th>الأولوية</th>
+                    <th>الحالة</th>
+                    <th>التقدم</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>تصميم واجهة لوحة التحكم</strong><span>تحسين العرض التنفيذي</span></td>
+                    <td>DevHub MVP</td>
+                    <td>أحمد</td>
+                    <td><span class="badge cyan">عالية</span></td>
+                    <td><span class="status-pill progress">قيد التنفيذ</span></td>
+                    <td><div class="progress-track table-progress"><span style="width: 84%"></span></div></td>
+                  </tr>
+                  <tr>
+                    <td><strong>تحضير صفحة التقارير</strong><span>ملخص أسبوعي للإدارة</span></td>
+                    <td>Reports</td>
+                    <td>سارة</td>
+                    <td><span class="badge blue">متوسطة</span></td>
+                    <td><span class="status-pill review">مراجعة</span></td>
+                    <td><div class="progress-track table-progress"><span style="width: 66%"></span></div></td>
+                  </tr>
+                  <tr>
+                    <td><strong>مراجعة هيكلة الأدوار</strong><span>صلاحيات العرض والتعديل</span></td>
+                    <td>Access</td>
+                    <td>محمد</td>
+                    <td><span class="badge amber">حرجة</span></td>
+                    <td><span class="status-pill blocked">عائق</span></td>
+                    <td><div class="progress-track table-progress"><span style="width: 42%"></span></div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="kanban full">
+            <div class="kanban-col"><div class="kanban-title"><span>Backlog</span><b>4</b></div><div class="task-ticket"><span class="badge blue">Idea</span><strong>إضافة مكتبة البرومبتات</strong><p>مرحلة لاحقة بعد MVP</p></div><div class="task-ticket"><span class="badge purple">UX</span><strong>Empty States مخصصة</strong><p>لكل صفحة ورسالة واضحة</p></div></div>
+            <div class="kanban-col"><div class="kanban-title"><span>To Do</span><b>3</b></div><div class="task-ticket"><span class="badge cyan">UI</span><strong>صفحة الدورات</strong><p>بطاقات تقدم وتعليم مستمر</p></div></div>
+            <div class="kanban-col"><div class="kanban-title"><span>In Progress</span><b>5</b></div><div class="task-ticket hot"><span class="badge green">Build</span><strong>Kanban للمهام</strong><p>تجربة مرنة على الجوال</p></div><div class="task-ticket"><span class="badge blue">Design</span><strong>Sidebar احترافي</strong><p>حالة نشطة وحركات Hover</p></div></div>
+            <div class="kanban-col"><div class="kanban-title"><span>Done</span><b>7</b></div><div class="task-ticket done"><span class="badge green">Done</span><strong>اختيار الهوية البصرية</strong><p>Dark + Electric Blue + Cyan</p></div></div>
+          </div>
+        </section>
+
+        <section class="view" id="achievements">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">Daily Wins</span>
+              <h1>إنجازات اليوم</h1>
+              <p>مساحة خفيفة لتوثيق ما تم إنجازه وربطه بالمهام والمشاريع.</p>
+            </div>
+            <button class="primary-button"><span data-icon="sparkles"></span> إضافة إنجاز</button>
+          </div>
+          <div class="timeline glass-card">
+            <div class="timeline-item"><span></span><div><strong>تم اعتماد تصميم الصفحة الرئيسية</strong><p>DevHub MVP · قبل 20 دقيقة</p></div><b class="badge green">مكتمل</b></div>
+            <div class="timeline-item"><span></span><div><strong>تجهيز جدول المهام وحالات الأولوية</strong><p>Tasks · قبل ساعة</p></div><b class="badge cyan">واجهة</b></div>
+            <div class="timeline-item"><span></span><div><strong>صياغة ملخص أسبوعي أولي</strong><p>Reports · اليوم 10:30 ص</p></div><b class="badge blue">تقرير</b></div>
+          </div>
+          <div class="empty-state glass-card">
+            <span data-icon="inbox"></span>
+            <h2>لا توجد عوائق جديدة اليوم</h2>
+            <p>استمر بتوثيق الإنجازات الصغيرة؛ هي التي تصنع التقرير الكبير.</p>
+          </div>
+        </section>
+
+        <section class="view" id="projects">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">Projects Portfolio</span>
+              <h1>المشاريع</h1>
+              <p>نظرة تنفيذية على تقدم المشاريع ومخاطرها الحالية.</p>
+            </div>
+            <button class="primary-button"><span data-icon="folder-plus"></span> مشروع جديد</button>
+          </div>
+          <div class="cards-grid">
+            <article class="project-card glass-card"><div class="project-top"><span class="badge cyan">نشط</span><b>84%</b></div><h2>DevHub MVP</h2><p>تصميم وإطلاق النسخة الأولى من مركز إدارة التطوير.</p><div class="progress-track"><span style="width:84%"></span></div><div class="team-stack"><i>أ</i><i>س</i><i>م</i></div></article>
+            <article class="project-card glass-card"><div class="project-top"><span class="badge green">إطلاق قريب</span><b>71%</b></div><h2>نظام التقارير</h2><p>تقارير يومية وأسبوعية مختصرة للإدارة.</p><div class="progress-track"><span style="width:71%"></span></div><div class="team-stack"><i>س</i><i>م</i></div></article>
+            <article class="project-card glass-card"><div class="project-top"><span class="badge amber">متوقف مؤقتًا</span><b>38%</b></div><h2>مكتبة المعرفة</h2><p>توثيق داخلي للأدوات، الحلول، والقرارات التقنية.</p><div class="progress-track"><span style="width:38%"></span></div><div class="team-stack"><i>أ</i></div></article>
+          </div>
+        </section>
+
+        <section class="view" id="courses">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">Learning Track</span>
+              <h1>الدورات</h1>
+              <p>متابعة التطور المهاري للفريق بطريقة قابلة للقياس.</p>
+            </div>
+            <button class="primary-button"><span data-icon="book-open-check"></span> إضافة دورة</button>
+          </div>
+          <div class="cards-grid">
+            <article class="course-card glass-card"><span class="badge cyan">قيد التعلم</span><h2>Advanced Next.js Patterns</h2><p>التركيز على App Router، الأداء، وبناء تجارب SaaS.</p><div class="course-meta"><span>أحمد</span><b>68%</b></div><div class="progress-track"><span style="width:68%"></span></div></article>
+            <article class="course-card glass-card"><span class="badge green">مكتملة</span><h2>Supabase Auth & RLS</h2><p>سياسات حماية قوية وربط آمن للأدوار.</p><div class="course-meta"><span>سارة</span><b>100%</b></div><div class="progress-track"><span style="width:100%"></span></div></article>
+            <article class="course-card glass-card"><span class="badge blue">مخططة</span><h2>Product Analytics</h2><p>قراءة المؤشرات وتحويلها إلى قرارات عملية.</p><div class="course-meta"><span>محمد</span><b>12%</b></div><div class="progress-track"><span style="width:12%"></span></div></article>
+          </div>
+        </section>
+
+        <section class="view" id="reports">
+          <div class="page-head">
+            <div>
+              <span class="eyebrow">Management Reports</span>
+              <h1>التقارير</h1>
+              <p>ملخصات تنفيذية جاهزة للعرض على الإدارة.</p>
+            </div>
+            <button class="primary-button"><span data-icon="download"></span> تصدير تقرير</button>
+          </div>
+          <div class="reports-layout">
+            <section class="glass-card chart-card">
+              <div class="section-head">
+                <div><h2>إنجاز الأسبوع</h2><p>مؤشر مبسط للمهام المكتملة حسب اليوم.</p></div>
+              </div>
+              <div class="chart-bars">
+                <i style="height: 42%"><span>أحد</span></i>
+                <i style="height: 78%"><span>اثن</span></i>
+                <i style="height: 63%"><span>ثلا</span></i>
+                <i style="height: 88%"><span>أرب</span></i>
+                <i style="height: 72%"><span>خمي</span></i>
+              </div>
+            </section>
+            <aside class="glass-card report-summary">
+              <h2>ملخص تنفيذي</h2>
+              <p>تم إنجاز 27 مهمة هذا الأسبوع، مع تقدم واضح في DevHub MVP بنسبة 84%، وعائق واحد متعلق بالاعتماد الإداري.</p>
+              <div class="summary-row"><span>معدل الإنجاز</span><b>81%</b></div>
+              <div class="summary-row"><span>المخاطر المفتوحة</span><b>1</b></div>
+              <div class="summary-row"><span>الدورات المكتملة</span><b>2</b></div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast">
+      <span data-icon="check-circle-2"></span>
+      <p>تم تنفيذ الإجراء بنجاح</p>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
