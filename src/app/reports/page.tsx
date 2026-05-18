@@ -7,7 +7,6 @@ import type {
   ReportAchievement,
   ReportCourse,
   ReportFilters,
-  ReportPeriod,
   ReportProjectOption,
   ReportStats,
   ReportTask,
@@ -55,12 +54,19 @@ type RawCourse = {
 export default async function ReportsPage({ searchParams }: ReportsPageProps) {
   const profile = await requireProfile();
   const params = (await searchParams) ?? {};
+
+  const selectedDate: string = isDateValue(params.date) && params.date ? params.date : getTodayDate();
+  const selectedUser: string = params.user && params.user !== "all" ? params.user : "all";
+  const selectedProject: string = params.project && params.project !== "all" ? params.project : "all";
+  const selectedPeriod: ReportPeriod = params.period === "weekly" ? "weekly" : "daily";
+
   const filters: ReportFilters = {
-    period: params.period === "weekly" ? "weekly" : "daily",
-    date: isDateValue(params.date) ? params.date : getTodayDate(),
-    user: params.user && params.user !== "all" ? params.user : "all",
-    project: params.project && params.project !== "all" ? params.project : "all",
+    period: selectedPeriod,
+    date: selectedDate,
+    user: selectedUser,
+    project: selectedProject,
   };
+
   const range = getReportDateRange(filters.period, filters.date);
   const supabase = await createClient();
 
@@ -107,6 +113,7 @@ export default async function ReportsPage({ searchParams }: ReportsPageProps) {
       email: user.email,
     }),
   );
+
   const projects = ((projectsData ?? []) as Array<{ id: string; name: string }>).map(
     (project): ReportProjectOption => ({
       id: project.id,
@@ -146,6 +153,7 @@ function mapTask(task: RawTask): ReportTask {
 
 function mapAchievement(item: RawAchievement): ReportAchievement {
   const task = Array.isArray(item.tasks) ? item.tasks[0] : item.tasks;
+
   return {
     id: item.id,
     title: item.title,
@@ -194,6 +202,6 @@ function buildStats(tasks: ReportTask[], achievements: ReportAchievement[], cour
   };
 }
 
-function isDateValue(value: string | undefined) {
+function isDateValue(value: string | undefined): boolean {
   return Boolean(value && /^\d{4}-\d{2}-\d{2}$/.test(value));
 }
