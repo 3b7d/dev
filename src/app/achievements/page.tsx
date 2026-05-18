@@ -28,8 +28,10 @@ type RawAchievement = {
 export default async function AchievementsPage({ searchParams }: AchievementsPageProps) {
   const profile = await requireProfile();
   const params = (await searchParams) ?? {};
-  const selectedDate = isDateValue(params.date) ? params.date : getTodayDate();
-  const selectedUser = params.user && params.user !== "all" ? params.user : "all";
+
+  const selectedDate: string = isDateValue(params.date) && params.date ? params.date : getTodayDate();
+  const selectedUser: string = params.user && params.user !== "all" ? params.user : "all";
+
   const supabase = await createClient();
 
   let achievementsQuery = supabase
@@ -119,10 +121,10 @@ function mapUser(user: { id: string; full_name: string | null; email: string }):
   };
 }
 
-function getTodayDate() {
+function getTodayDate(): string {
   return new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Riyadh" });
 }
 
-function isDateValue(value: string | undefined) {
+function isDateValue(value: string | undefined): boolean {
   return Boolean(value && /^\d{4}-\d{2}-\d{2}$/.test(value));
 }
