@@ -58,7 +58,7 @@ export default async function ReportsPage({ searchParams }: ReportsPageProps) {
   const selectedDate: string = isDateValue(params.date) && params.date ? params.date : getTodayDate();
   const selectedUser: string = params.user && params.user !== "all" ? params.user : "all";
   const selectedProject: string = params.project && params.project !== "all" ? params.project : "all";
-  const selectedPeriod: ReportPeriod = params.period === "weekly" ? "weekly" : "daily";
+  const selectedPeriod: ReportFilters["period"] = params.period === "weekly" ? "weekly" : "daily";
 
   const filters: ReportFilters = {
     period: selectedPeriod,
