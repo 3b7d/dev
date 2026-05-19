@@ -28,14 +28,27 @@ type RawTask = {
   creator: { id: string; full_name: string | null; email: string } | { id: string; full_name: string | null; email: string }[] | null;
 };
 
+type TaskFilters = {
+  status: TaskStatus | "all";
+  priority: TaskPriority | "all";
+  assignee: string;
+  view: "table" | "kanban";
+};
+
 export default async function TasksPage({ searchParams }: TasksPageProps) {
   const profile = await requireProfile();
   const params = (await searchParams) ?? {};
-  const filters = {
-    status: isTaskStatus(params.status) ? params.status : "all",
-    priority: isTaskPriority(params.priority) ? params.priority : "all",
-    assignee: params.assignee && params.assignee !== "all" ? params.assignee : "all",
-    view: params.view === "kanban" ? "kanban" : "table",
+
+  const selectedStatus: TaskStatus | "all" = isTaskStatus(params.status) ? params.status : "all";
+  const selectedPriority: TaskPriority | "all" = isTaskPriority(params.priority) ? params.priority : "all";
+  const selectedAssignee: string = params.assignee && params.assignee !== "all" ? params.assignee : "all";
+  const selectedView: "table" | "kanban" = params.view === "kanban" ? "kanban" : "table";
+
+  const filters: TaskFilters = {
+    status: selectedStatus,
+    priority: selectedPriority,
+    assignee: selectedAssignee,
+    view: selectedView,
   };
 
   const supabase = await createClient();
