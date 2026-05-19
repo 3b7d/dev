@@ -4,13 +4,21 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { canAccessPath, getHomeRouteForRole } from "@/config/permissions";
 import type { AppRole } from "@/types/auth";
 
+type CookieToSet = {
+  name: string;
+  value: string;
+  options?: Parameters<NextResponse["cookies"]["set"]>[2];
+};
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   });
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseKey =
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ??
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!supabaseUrl || !supabaseKey) {
     return supabaseResponse;
@@ -21,9 +29,13 @@ export async function updateSession(request: NextRequest) {
       getAll() {
         return request.cookies.getAll();
       },
-      setAll(cookiesToSet) {
-        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+      setAll(cookiesToSet: CookieToSet[]) {
+        cookiesToSet.forEach(({ name, value }) => {
+          request.cookies.set(name, value);
+        });
+
         supabaseResponse = NextResponse.next({ request });
+
         cookiesToSet.forEach(({ name, value, options }) => {
           supabaseResponse.cookies.set(name, value, options);
         });
@@ -87,6 +99,7 @@ function getRoleFromProfile(profile: unknown) {
   }
 
   const roles = "roles" in profile ? profile.roles : undefined;
+
   return Array.isArray(roles)
     ? roles[0]?.key
     : roles && typeof roles === "object" && "key" in roles
