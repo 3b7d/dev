@@ -146,12 +146,10 @@ function HeroSection() {
         <div>
           <span className="badge border-cyanx/30 bg-cyanx/10 text-cyan-100">DevHub Command Center</span>
           <h1 className="mt-4 max-w-4xl text-4xl font-black leading-[1.08] text-foreground md:text-6xl">
-مركز إدارة قسم التطوير
-منصة موحدة لتنظيم المهام والإنجازات والمشاريع          </h1>
+مركز إدارة قسم التطوير </h1>
           <p className="mt-5 max-w-2xl text-base leading-8 text-muted md:text-lg">
-            المرحلة الأولى تضع الأساس البصري للنظام: هوية داكنة فاخرة، Layout قابل للتوسع، وDashboard
-            واضحة تلتقط حالة اليوم من أول نظرة.
-          </p>
+نظام داخلي يساعد فريق التطوير على متابعة المهام اليومية، توثيق الإنجازات، إدارة المشاريع، ومتابعة الدورات من مكان واحد وبأسلوب احترافي.
+    </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <button className="premium-button">
               <Rocket className="h-5 w-5" />
