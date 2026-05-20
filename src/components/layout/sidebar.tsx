@@ -46,11 +46,12 @@ export function Sidebar({ open, onClose, profile }: SidebarProps) {
         {sidebarItems.map((item) => {
           const Icon = item.icon;
           const roleBlocked =
-            (item.href === "/tasks" ||
+            (((item.href === "/tasks" ||
               item.href === "/achievements" ||
               item.href === "/projects" ||
               item.href === "/courses") &&
-            profile.role === "viewer";
+              profile.role === "viewer") ||
+              (item.href === "/users" && profile.role !== "admin"));
           const disabled = item.disabled || roleBlocked;
           const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
           const className = cn(

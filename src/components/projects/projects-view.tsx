@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { CalendarDays, FolderGit2, Link2, Plus, Route, Trash2 } from "lucide-react";
+import { FolderGit2, Link2, Plus, Route, Trash2 } from "lucide-react";
 import {
   addProjectLink,
   addTimelineEvent,

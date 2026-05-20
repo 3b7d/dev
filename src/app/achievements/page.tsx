@@ -3,7 +3,7 @@ import { AchievementsView } from "@/components/achievements/achievements-view";
 import { requireProfile } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import type { DailyAchievement } from "@/types/achievements";
-import type { TaskItem, TaskPriority, TaskStatus, TaskUser } from "@/types/tasks";
+import type { TaskPriority, TaskStatus, TaskUser } from "@/types/tasks";
 
 type AchievementsPageProps = {
   searchParams?: Promise<{

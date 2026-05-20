@@ -14,14 +14,16 @@ import {
   UsersRound,
 } from "lucide-react";
 
-export const sidebarItems = [
+export type SidebarItem = { title: string; href: string; icon: (typeof LayoutDashboard); disabled?: boolean };
+
+export const sidebarItems: SidebarItem[] = [
   { title: "لوحة التحكم", href: "/", icon: LayoutDashboard },
   { title: "المهام", href: "/tasks", icon: ListChecks },
   { title: "إنجازات اليوم", href: "/achievements", icon: Sparkles },
   { title: "المشاريع", href: "/projects", icon: FolderGit2 },
   { title: "الدورات", href: "/courses", icon: GraduationCap },
   { title: "التقارير", href: "/reports", icon: BarChart3 },
-  { title: "المستخدمون", href: "/users", icon: UsersRound, disabled: true },
+  { title: "إدارة المستخدمين", href: "/users", icon: UsersRound },
 ];
 
 export const dashboardMetrics = [

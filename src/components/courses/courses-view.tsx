@@ -60,7 +60,7 @@ export function CoursesView({ profile, courses, users }: CoursesViewProps) {
       {courses.length ? (
         <section className="grid gap-4 xl:grid-cols-2">
           {courses.map((course) => (
-            <CourseCard key={course.id} profile={profile} course={course} users={users} />
+            <CourseCard key={course.id} profile={profile} course={course} />
           ))}
         </section>
       ) : (
@@ -93,7 +93,7 @@ function CourseCreatePanel({ profile, users, canCreate }: { profile: AuthProfile
   );
 }
 
-function CourseCard({ profile, course, users }: { profile: AuthProfile; course: CourseItem; users: TaskUser[] }) {
+function CourseCard({ profile, course }: { profile: AuthProfile; course: CourseItem }) {
   const canManage = canManageCourse(profile.role, profile.id, course.user?.id, course.createdBy?.id);
 
   return (

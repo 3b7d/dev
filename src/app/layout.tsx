@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import { Tajawal } from "next/font/google";
 import type { ReactNode } from "react";
+import "@fontsource/tajawal/400.css";
+import "@fontsource/tajawal/500.css";
+import "@fontsource/tajawal/700.css";
+import "@fontsource/tajawal/800.css";
+import "@fontsource/tajawal/900.css";
 import "./globals.css";
-
-const tajawal = Tajawal({
-  subsets: ["arabic", "latin"],
-  weight: ["400", "500", "700", "800", "900"],
-  variable: "--font-tajawal",
-});
 
 export const metadata: Metadata = {
   title: "DevHub | مركز إدارة قسم التطوير",
@@ -21,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" className="dark">
-      <body className={`${tajawal.variable} min-h-screen bg-background font-sans text-foreground antialiased`}>
-        {children}
-      </body>
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased">{children}</body>
     </html>
   );
 }
