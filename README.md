@@ -1,8 +1,36 @@
 # DevHub | مركز إدارة قسم التطوير
 
-واجهة المرحلة الأولى من نظام DevHub.
+واجهة داخلية لإدارة قسم التطوير (مهام، إنجازات يومية، مشاريع، دورات، وتقارير) مبنية بـ Next.js و Supabase.
 
-## التشغيل
+## متطلبات التشغيل
+
+- Node.js 20+
+- npm 10+
+- مشروع Supabase جاهز
+
+## متغيرات البيئة المطلوبة
+
+أنشئ ملف `.env.local` في جذر المشروع وضع القيم التالية:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL="https://your-project-ref.supabase.co"
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="your-supabase-publishable-or-anon-key"
+```
+
+> ملاحظة: لا تضع مفاتيح سرية (Service Role) داخل تطبيق الواجهة.
+
+## ترتيب تشغيل ملفات Supabase Migrations
+
+نفّذ ملفات SQL بالترتيب التالي:
+
+1. `supabase/migrations/0001_auth_roles.sql`
+2. `supabase/migrations/0002_tasks.sql`
+3. `supabase/migrations/0003_daily_achievements.sql`
+4. `supabase/migrations/0004_projects.sql`
+5. `supabase/migrations/0005_courses.sql`
+6. `supabase/migrations/0006_reports_read_access.sql`
+
+## التشغيل المحلي
 
 ```bash
 npm install
@@ -15,74 +43,22 @@ npm run dev
 http://localhost:3000
 ```
 
-## نطاق المرحلة الأولى
-
-- مشروع Next.js باستخدام App Router.
-- إعداد Tailwind CSS.
-- RTL كامل من مستوى `html`.
-- ثيم داكن Premium Tech.
-- Layout عام.
-- Sidebar.
-- Topbar.
-- Dashboard أولية ببيانات وهمية.
-
-كانت المرحلة الأولى بدون ربط قاعدة بيانات. المرحلة الثانية تضيف Supabase Auth والصلاحيات فقط.
-
-## المرحلة الثانية: Supabase Auth
-
-1. أنشئ مشروع Supabase.
-2. انسخ القيم إلى `.env.local`:
+## أوامر التحقق
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL="https://your-project-ref.supabase.co"
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY="your-supabase-publishable-or-anon-key"
+npm run lint
+npm run build
 ```
 
-3. شغّل ملف SQL:
+- `npm run lint`: يتحقق من جودة الكود باستخدام ESLint بدون أي شاشة تفاعلية.
+- `npm run build`: يتأكد أن التطبيق يبنى بنجاح للإنتاج.
 
-```txt
-supabase/migrations/0001_auth_roles.sql
-```
+## إعداد يدوي مطلوب بعد التعديلات
 
-4. أنشئ مستخدمًا من Supabase Auth، ثم رقّه إلى Admin عند الحاجة:
+1. تأكد من وجود ملف `.env.local` بالقيم المطلوبة أعلاه.
+2. تأكد من تنفيذ ملفات migrations بالترتيب.
+3. بعد سحب التعديلات الجديدة، شغّل `npm install` لتثبيت حزمة الخط المحلية `@fontsource/tajawal`.
 
-```sql
-update public.users
-set role_id = (select id from public.roles where key = 'admin')
-where email = 'admin@company.com';
-```
+## ملاحظات حول الخط العربي
 
-5. افتح `/login` وسجل الدخول.
-
-## المرحلة الثالثة: قسم المهام
-
-1. شغّل ملف SQL بعد ملف المرحلة الثانية:
-
-```txt
-supabase/migrations/0002_tasks.sql
-```
-
-2. أنشئ مشروعًا اختباريًا اختياريًا لربط المهام به:
-
-```sql
-insert into public.projects (name, description, created_by)
-values (
-  'DevHub MVP',
-  'مشروع اختباري لربط المهام',
-  auth.uid()
-);
-```
-
-إذا نفذت الأمر من SQL Editor بدون جلسة مستخدم، استبدل `auth.uid()` بمعرف مستخدم موجود من جدول `public.users`.
-
-3. افتح:
-
-```txt
-http://localhost:3000/tasks
-```
-
-4. اختبر حسب الدور:
-
-- Admin و Team Lead: إضافة، تعديل، حذف، تغيير حالة، وإسناد لأي مستخدم.
-- Member: إضافة وتعديل مهامه فقط، والإسناد يكون لنفسه.
-- Viewer: لا يستطيع دخول `/tasks` ويتم توجيهه إلى `/unauthorized`.
+تم اعتماد خط **Tajawal** عبر حزمة محلية (`@fontsource/tajawal`) بدل الجلب من Google Fonts وقت البناء؛ للحفاظ على الشكل العربي نفسه قدر الإمكان وتفادي فشل البناء عند ضعف/انقطاع الشبكة.
