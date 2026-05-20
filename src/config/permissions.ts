@@ -35,6 +35,10 @@ export const protectedRoutes: Array<{
     roles: ["admin", "team_lead", "member"],
   },
   {
+    prefix: "/users",
+    roles: ["admin"],
+  },
+  {
     prefix: "/",
     roles: ["admin", "team_lead", "member", "viewer"],
   },
