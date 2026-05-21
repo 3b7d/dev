@@ -15,8 +15,8 @@ export function AppShell({ children, profile }: AppShellProps) {
 
   return (
     <div className="relative min-h-screen overflow-hidden px-3 py-3 md:px-4 md:py-4 lg:px-5 lg:py-5">
-      <div className="pointer-events-none fixed inset-0 -z-20 tech-grid opacity-50" />
-      <div className="pointer-events-none fixed inset-0 -z-30 bg-[radial-gradient(circle_at_82%_-10%,rgba(56,189,248,0.08),transparent_34%),radial-gradient(circle_at_12%_110%,rgba(15,23,42,0.7),transparent_42%)]" />
+      <div className="pointer-events-none fixed inset-0 -z-20 tech-grid opacity-30 dark:opacity-50" />
+      <div className="pointer-events-none fixed inset-0 -z-30 bg-[radial-gradient(circle_at_82%_-10%,rgba(37,99,235,0.08),transparent_34%),radial-gradient(circle_at_12%_110%,rgba(15,23,42,0.08),transparent_42%)] dark:bg-[radial-gradient(circle_at_82%_-10%,rgba(56,189,248,0.08),transparent_34%),radial-gradient(circle_at_12%_110%,rgba(15,23,42,0.7),transparent_42%)]" />
 
       <div className="grid min-h-[calc(100vh-1.5rem)] gap-3 lg:min-h-[calc(100vh-2.5rem)] lg:grid-cols-[15.5rem_minmax(0,1fr)] lg:gap-4">
         <Sidebar profile={profile} open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
