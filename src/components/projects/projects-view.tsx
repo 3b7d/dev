@@ -88,9 +88,9 @@ export function ProjectsView({ profile, projects, users }: ProjectsViewProps) {
             <div className="mx-auto grid h-16 w-16 place-items-center rounded-3xl border border-cyanx/25 bg-cyanx/10 text-cyan-100">
               <FolderGit2 className="h-8 w-8" />
             </div>
-            <h2 className="mt-5 text-2xl font-black">لا توجد مشاريع بعد</h2>
+            <h2 className="mt-5 text-2xl font-black">لا توجد مشاريع حتى الآن</h2>
             <p className="mt-2 max-w-md text-sm leading-7 text-muted">
-              أضف أول مشروع لتبدأ ربط المهام وتتبع نسبة الإنجاز.
+              ابدأ بإضافة أول مشروع لقسم التطوير
             </p>
           </div>
         </section>
