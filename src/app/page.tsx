@@ -3,6 +3,15 @@ import { DashboardView } from "@/components/dashboard/dashboard-view";
 import { requireProfile } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 
+type RawDashboardTask = {
+  id: string;
+  title: string;
+  status: string;
+  priority: string;
+  due_date: string | null;
+  created_at: string;
+};
+
 export default async function HomePage() {
   const profile = await requireProfile();
   const supabase = await createClient();
@@ -22,6 +31,11 @@ export default async function HomePage() {
     .order("updated_at", { ascending: false })
     .limit(3);
 
+  const { data: tasksData } = await supabase
+    .from("tasks")
+    .select("id,title,status,priority,due_date,created_at")
+    .order("created_at", { ascending: false });
+
   return (
     <AppShell profile={profile}>
       <DashboardView
@@ -39,6 +53,7 @@ export default async function HomePage() {
           provider: course.provider,
           progress: course.progress ?? 0,
         }))}
+        tasks={(tasksData ?? []) as RawDashboardTask[]}
       />
     </AppShell>
   );
