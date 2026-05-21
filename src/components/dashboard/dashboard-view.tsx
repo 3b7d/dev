@@ -17,15 +17,25 @@ type DashboardViewProps = {
   activeProjects?: Array<{ id: string; name: string; description: string | null; progress: number; dueDate: string | null }> ;
   activeProjectsCount?: number;
   ongoingCourses?: Array<{ id: string; title: string; provider: string | null; progress: number }> ;
+  tasks?: Array<{ id: string; title: string; status: string; priority: string; due_date: string | null; created_at: string }>;
 };
 
-export function DashboardView({ activeProjects = [], activeProjectsCount = 0, ongoingCourses = [] }: DashboardViewProps) {
+type DashboardMetrics = {
+  tasksToday: number;
+  inProgress: number;
+  attentionTasks: Array<{ id: string; title: string; status: string; priority: string; due_date: string | null; created_at: string; reason: string }>;
+  usesDueDateFallback: boolean;
+};
+
+export function DashboardView({ activeProjects = [], activeProjectsCount = 0, ongoingCourses = [], tasks = [] }: DashboardViewProps) {
+  const metrics = buildDashboardMetrics(tasks);
+
   return (
     <div className="space-y-3.5 lg:space-y-4">
       <HeroSection />
-      <MetricGrid activeProjectsCount={activeProjectsCount} />
+      <MetricGrid activeProjectsCount={activeProjectsCount} tasksToday={metrics.tasksToday} inProgress={metrics.inProgress} />
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(21rem,0.8fr)]">
-        <TasksAttentionPanel />
+        <TasksAttentionPanel tasks={metrics.attentionTasks} usesDueDateFallback={metrics.usesDueDateFallback} />
         <ActivityPanel />
       </div>
       <div className="grid gap-4 xl:grid-cols-2">
@@ -70,18 +80,18 @@ function HeroSection() {
 }
 
 const dashboardMetrics = [
-  { label: "مهام اليوم", value: "0", trend: "0%", tone: "cyan" },
-  { label: "قيد التنفيذ", value: "0", trend: "0%", tone: "blue" },
+  { label: "مهام اليوم", trend: "Live", tone: "cyan" },
+  { label: "قيد التنفيذ", trend: "Live", tone: "blue" },
   { label: "مشاريع نشطة", trend: "Live", tone: "green" },
   { label: "عوائق مفتوحة", value: "0", trend: "0", tone: "amber" },
 ] as const;
 
-function MetricGrid({ activeProjectsCount }: { activeProjectsCount: number }) {
+function MetricGrid({ activeProjectsCount, tasksToday, inProgress }: { activeProjectsCount: number; tasksToday: number; inProgress: number }) {
   return (
     <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
       {dashboardMetrics.slice(0, 5).map((metric, index) => {
         const Icon = kpiIcons[index] ?? Activity;
-        const value = metric.label === "مشاريع نشطة" ? String(activeProjectsCount) : metric.value;
+        const value = metric.label === "مشاريع نشطة" ? String(activeProjectsCount) : metric.label === "مهام اليوم" ? String(tasksToday) : metric.label === "قيد التنفيذ" ? String(inProgress) : (metric.value ?? "0");
 
         return (
           <article key={metric.label} className="glass-card rounded-2xl p-4">
@@ -100,8 +110,8 @@ function MetricGrid({ activeProjectsCount }: { activeProjectsCount: number }) {
   );
 }
 
-function TasksAttentionPanel() {
-  return <TasksTable />;
+function TasksAttentionPanel({ tasks, usesDueDateFallback }: { tasks: DashboardMetrics["attentionTasks"]; usesDueDateFallback: boolean }) {
+  return <TasksTable tasks={tasks} usesDueDateFallback={usesDueDateFallback} />;
 }
 
 function AchievementsPanel() {
@@ -139,8 +149,43 @@ function OngoingCoursesPanel({ courses }: { courses: NonNullable<DashboardViewPr
   );
 }
 
-function TasksTable() {
-  return <section className="glass-card"><PanelHeader eyebrow="Priority" title="مهام تحتاج انتباه" /><div className="rounded-2xl border border-dashed border-border p-5 text-center text-sm text-muted">لا توجد مهام تحتاج انتباه حاليًا.</div></section>;
+function TasksTable({ tasks, usesDueDateFallback }: { tasks: DashboardMetrics["attentionTasks"]; usesDueDateFallback: boolean }) {
+  return <section className="glass-card"><PanelHeader eyebrow="Priority" title="مهام تحتاج انتباه" />{tasks.length ? <div className="space-y-2.5">{tasks.map((task) => <article key={task.id} className="rounded-2xl border border-border bg-slate-950/35 p-3.5"><div className="flex items-center justify-between gap-3"><h3 className="text-sm font-bold">{task.title}</h3><span className="badge min-h-6 px-2.5 text-[11px] border-amber-400/30 bg-amber-400/10 text-amber-100">{task.reason}</span></div></article>)}</div> : <div className="rounded-2xl border border-dashed border-border p-5 text-center text-sm text-muted">Empty State</div>}{usesDueDateFallback ? <p className="mt-3 text-xs text-muted">ملاحظة: تم استخدام created_at مؤقتًا لعدم توفر due_date في بعض المهام.</p> : null}</section>;
+}
+
+function toRiyadhDate(dateInput: string) {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Riyadh", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(dateInput));
+}
+
+function buildDashboardMetrics(tasks: NonNullable<DashboardViewProps["tasks"]>): DashboardMetrics {
+  const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Riyadh", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  const hasAnyDueDate = tasks.some((task) => Boolean(task.due_date));
+  const usesDueDateFallback = !hasAnyDueDate;
+
+  const tasksToday = tasks.filter((task) => {
+    const sourceDate = task.due_date ?? task.created_at;
+    return toRiyadhDate(sourceDate) === today;
+  }).length;
+
+  const inProgress = tasks.filter((task) => task.status === "in_progress").length;
+
+  const attentionTasks = tasks.filter((task) => {
+    const dueDate = task.due_date ? toRiyadhDate(task.due_date) : null;
+    const fallbackDate = toRiyadhDate(task.created_at);
+    const referenceDate = dueDate ?? fallbackDate;
+    const isDueToday = referenceDate === today;
+    const isOverdue = task.status === "overdue" || (referenceDate < today && task.status !== "completed" && task.status !== "cancelled");
+    const isUrgent = task.priority === "urgent";
+    return isDueToday || isOverdue || isUrgent;
+  }).slice(0, 6).map((task) => {
+    const dateForCompare = toRiyadhDate(task.due_date ?? task.created_at);
+    const isOverdue = task.status === "overdue" || (dateForCompare < today && task.status !== "completed" && task.status !== "cancelled");
+    const isUrgent = task.priority === "urgent";
+    const reason = isOverdue ? "متأخرة" : isUrgent ? "عاجلة" : "تستحق اليوم";
+    return { ...task, reason };
+  });
+
+  return { tasksToday, inProgress, attentionTasks, usesDueDateFallback };
 }
 
 function ActivityPanel() {
