@@ -19,30 +19,30 @@ export function Sidebar({ open, onClose, profile }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "glass-panel fixed bottom-3 right-3 top-3 z-40 flex w-[min(21rem,calc(100vw-1.5rem))] flex-col rounded-[1.75rem] p-5 transition duration-300 lg:sticky lg:top-5 lg:z-10 lg:h-[calc(100vh-2.5rem)] lg:w-auto lg:translate-x-0",
+        "glass-panel fixed bottom-3 right-3 top-3 z-40 flex w-[min(17rem,calc(100vw-1.5rem))] flex-col rounded-2xl px-3 py-4 transition duration-300 lg:sticky lg:top-5 lg:z-10 lg:h-[calc(100vh-2.5rem)] lg:w-auto lg:translate-x-0",
         open ? "translate-x-0" : "translate-x-[calc(100%+2rem)]",
       )}
     >
-      <div className="flex items-center justify-between gap-3 border-b border-border pb-5">
-        <div className="flex items-center gap-3">
-          <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-electric to-cyanx text-base font-black text-white shadow-glow">
+      <div className="flex items-center justify-between gap-2 border-b border-border px-1 pb-4">
+        <div className="flex items-center gap-2.5">
+          <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-electric to-cyanx text-xs font-black text-white">
             DH
           </div>
           <div>
-            <p className="text-xl font-black leading-none">DevHub</p>
-            <p className="mt-1 text-xs font-medium text-muted">مركز إدارة قسم التطوير</p>
+            <p className="text-base font-extrabold leading-none">DevHub</p>
+            <p className="mt-1 text-[11px] text-muted">لوحة التطوير</p>
           </div>
         </div>
         <button
-          className="grid h-10 w-10 place-items-center rounded-2xl border border-border text-muted transition hover:border-cyanx/40 hover:text-foreground lg:hidden"
+          className="grid h-8 w-8 place-items-center rounded-xl border border-border text-muted transition hover:border-cyanx/40 hover:text-foreground lg:hidden"
           onClick={onClose}
           aria-label="إغلاق القائمة"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4" />
         </button>
       </div>
 
-      <nav className="mt-6 grid gap-2">
+      <nav className="mt-4 grid gap-1.5">
         {sidebarItems.map((item) => {
           const Icon = item.icon;
           const roleBlocked =
@@ -55,22 +55,19 @@ export function Sidebar({ open, onClose, profile }: SidebarProps) {
           const disabled = item.disabled || roleBlocked;
           const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
           const className = cn(
-            "group relative flex min-h-12 items-center gap-3 rounded-2xl border px-4 text-right text-sm font-bold transition",
+            "group relative flex min-h-10 items-center gap-2.5 rounded-xl border px-3 text-sm font-semibold transition",
             active
-              ? "border-electric/35 bg-electric/15 text-foreground shadow-[inset_0_0_24px_rgba(34,211,238,0.05)]"
+              ? "border-cyanx/35 bg-cyanx/10 text-foreground"
               : "border-transparent text-muted hover:border-border hover:bg-slate-950/35 hover:text-foreground",
             disabled && "cursor-not-allowed opacity-55",
           );
 
           const content = (
             <>
-              {active ? (
-                <span className="absolute -right-5 h-7 w-1 rounded-full bg-gradient-to-b from-cyanx to-electric shadow-glow" />
-              ) : null}
-              <Icon className="h-5 w-5" />
-              <span>{item.title}</span>
+              <Icon className="h-4.5 w-4.5" />
+              <span className="truncate">{item.title}</span>
               {disabled ? (
-                <span className="mr-auto text-[0.68rem] text-muted/70">{roleBlocked ? "غير متاح" : "لاحقًا"}</span>
+                <span className="mr-auto text-[10px] text-muted/70">{roleBlocked ? "غير متاح" : "لاحقًا"}</span>
               ) : null}
             </>
           );
@@ -87,22 +84,19 @@ export function Sidebar({ open, onClose, profile }: SidebarProps) {
         })}
       </nav>
 
-      <div className="mt-auto rounded-3xl border border-cyanx/25 bg-gradient-to-br from-cyanx/10 to-electric/10 p-4">
-        <div className="flex items-center gap-2 text-xs font-bold text-muted">
-          <span className="h-2.5 w-2.5 rounded-full bg-success shadow-[0_0_16px_rgba(16,185,129,0.85)]" />
-          صحة الفريق
-        </div>
-        <div className="mt-3 flex items-end justify-between gap-3">
-          <strong className="text-4xl font-black">92%</strong>
-          <span className="rounded-full border border-success/30 bg-success/10 px-3 py-1 text-xs font-black text-emerald-200">
+      <div className="mt-auto rounded-2xl border border-border bg-slate-950/40 p-3">
+        <div className="flex items-center justify-between text-xs">
+          <span className="text-muted">صحة الفريق</span>
+          <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-200">
             مستقر
           </span>
         </div>
-        <p className="mt-3 text-sm leading-7 text-muted">
-          التقدم مستقر، مع عائق واحد يحتاج متابعة من قائد الفريق.
-        </p>
-        <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-slate-700/40">
-          <div className="h-full w-[92%] rounded-full bg-gradient-to-l from-success via-cyanx to-electric shadow-glow" />
+        <div className="mt-2 flex items-center justify-between">
+          <strong className="text-xl font-bold">92%</strong>
+          <span className="h-2 w-2 rounded-full bg-success" />
+        </div>
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-700/40">
+          <div className="h-full w-[92%] rounded-full bg-gradient-to-l from-success to-cyanx" />
         </div>
       </div>
     </aside>

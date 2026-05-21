@@ -11,14 +11,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#050816",
+        background: "#070B14",
         foreground: "#F8FAFC",
         muted: "#94A3B8",
-        electric: "#3B82F6",
-        cyanx: "#22D3EE",
+        electric: "#38BDF8",
+        cyanx: "#38BDF8",
         success: "#10B981",
-        border: "rgba(148, 163, 184, 0.16)",
-        card: "rgba(15, 23, 42, 0.66)",
+        border: "rgba(148, 163, 184, 0.14)",
+        card: "rgba(15, 23, 42, 0.82)",
       },
       fontFamily: {
         sans: ["var(--font-tajawal)", "ui-sans-serif", "system-ui"],

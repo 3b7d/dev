@@ -4,86 +4,44 @@
 
 :root {
   --font-tajawal: "Tajawal";
-  --background: #050816;
-  --foreground: #f8fafc;
-  --muted: #94a3b8;
-  --electric: #3b82f6;
-  --cyan: #22d3ee;
-  --success: #10b981;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  background:
-    radial-gradient(circle at 78% -8%, rgba(59, 130, 246, 0.34), transparent 30rem),
-    radial-gradient(circle at 8% 100%, rgba(34, 211, 238, 0.2), transparent 34rem),
-    #050816;
+  background: radial-gradient(circle at 80% -15%, rgba(56, 189, 248, 0.08), transparent 32rem), #070b14;
 }
-
-button,
-input {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-::selection {
-  background: rgba(34, 211, 238, 0.32);
-  color: #f8fafc;
-}
+button, input { font: inherit; }
+button { cursor: pointer; }
+::selection { background: rgba(56, 189, 248, 0.26); color: #f8fafc; }
 
 @layer components {
   .glass-panel {
-    @apply border border-border bg-card shadow-premium backdrop-blur-2xl;
-    background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.024));
+    @apply border border-border bg-card shadow-premium backdrop-blur-xl;
   }
 
   .glass-card {
-    @apply rounded-3xl border border-border bg-card p-5 shadow-premium backdrop-blur-2xl transition duration-300;
-    background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-  }
-
-  .glass-card:hover {
-    @apply -translate-y-1 border-cyanx/35 shadow-glow;
+    @apply rounded-2xl border border-border bg-card p-5 shadow-premium transition duration-200;
   }
 
   .premium-button {
-    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-cyanx/30 bg-gradient-to-l from-electric to-cyanx px-5 text-sm font-extrabold text-white shadow-glow transition hover:-translate-y-0.5 hover:brightness-110;
+    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-cyanx/35 bg-cyanx px-4 text-sm font-bold text-slate-950 transition hover:brightness-110;
   }
 
   .soft-button {
-    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-border bg-slate-950/40 px-4 text-sm font-bold text-muted transition hover:-translate-y-0.5 hover:border-cyanx/35 hover:text-foreground;
+    @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-border bg-slate-950/45 px-4 text-sm font-semibold text-muted transition hover:border-cyanx/35 hover:text-foreground;
   }
 
   .badge {
-    @apply inline-flex min-h-7 items-center rounded-full border px-3 text-xs font-extrabold;
-  }
-
-  .metric-label {
-    @apply text-sm font-medium text-muted;
-  }
-
-  .section-title {
-    @apply text-xl font-black text-foreground;
+    @apply inline-flex min-h-6 items-center rounded-full border px-2.5 text-xs font-bold;
   }
 }
 
 .tech-grid {
-  background-image:
-    linear-gradient(rgba(148, 163, 184, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
-  background-size: 54px 54px;
+  background-image: linear-gradient(rgba(148, 163, 184, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.04) 1px, transparent 1px);
+  background-size: 52px 52px;
   mask-image: radial-gradient(circle at center, black, transparent 82%);
 }

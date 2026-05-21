@@ -14,52 +14,51 @@ export function Topbar({ onMenuClick, profile }: TopbarProps) {
   const canCreate = profile.role !== "viewer";
 
   return (
-    <header className="glass-panel sticky top-3 z-20 flex min-h-[4.75rem] flex-wrap items-center gap-3 rounded-3xl p-3 lg:top-5">
+    <header className="glass-panel sticky top-3 z-20 flex min-h-[3.9rem] flex-wrap items-center gap-2 rounded-2xl px-3 py-2 lg:top-5">
       <button
-        className="grid h-12 w-12 place-items-center rounded-2xl border border-border text-muted transition hover:border-cyanx/40 hover:text-foreground lg:hidden"
+        className="grid h-9 w-9 place-items-center rounded-xl border border-border text-muted transition hover:border-cyanx/40 hover:text-foreground lg:hidden"
         onClick={onMenuClick}
         aria-label="فتح القائمة"
       >
-        <Menu className="h-5 w-5" />
+        <Menu className="h-4.5 w-4.5" />
       </button>
 
-      <label className="order-3 flex h-12 min-w-full flex-1 items-center gap-3 rounded-2xl border border-border bg-slate-950/40 px-4 text-muted lg:order-none lg:min-w-72">
-        <Search className="h-5 w-5" />
+      <label className="order-3 flex h-9 min-w-full flex-1 items-center gap-2 rounded-xl border border-border bg-slate-950/45 px-3 text-muted lg:order-none lg:min-w-64">
+        <Search className="h-4 w-4" />
         <input
           className="w-full bg-transparent text-sm text-foreground outline-none placeholder:text-muted"
           placeholder="ابحث عن مهمة، مشروع، تقرير..."
           type="search"
         />
-        <kbd className="hidden rounded-lg border border-border px-2 py-1 text-xs text-muted sm:block">⌘ K</kbd>
       </label>
 
       <div className="mr-auto flex items-center gap-2">
         <button
-          className="relative grid h-12 w-12 place-items-center rounded-2xl border border-border bg-slate-950/40 text-muted transition hover:border-cyanx/40 hover:text-foreground"
+          className="relative grid h-9 w-9 place-items-center rounded-xl border border-border bg-slate-950/40 text-muted transition hover:border-cyanx/40 hover:text-foreground"
           aria-label="الإشعارات"
         >
-          <Bell className="h-5 w-5" />
-          <span className="absolute left-3 top-3 h-2.5 w-2.5 rounded-full bg-success shadow-[0_0_14px_rgba(16,185,129,0.9)]" />
+          <Bell className="h-4 w-4" />
+          <span className="absolute left-2.5 top-2.5 h-2 w-2 rounded-full bg-success" />
         </button>
 
         {canCreate ? (
-          <button className="premium-button h-12 px-4 sm:px-5">
-            <Plus className="h-5 w-5" />
-            <span className="hidden sm:inline">إضافة سريعة</span>
+          <button className="premium-button h-9 px-3.5 text-xs">
+            <Plus className="h-4 w-4" />
+            <span>إضافة سريعة</span>
           </button>
         ) : (
-          <span className="hidden h-12 items-center rounded-2xl border border-border bg-slate-950/40 px-4 text-sm font-black text-muted sm:inline-flex">
+          <span className="hidden h-9 items-center rounded-xl border border-border bg-slate-950/40 px-3 text-xs font-bold text-muted sm:inline-flex">
             مشاهدة فقط
           </span>
         )}
 
-        <div className="hidden h-12 items-center gap-3 rounded-2xl border border-border bg-slate-950/35 py-1.5 pl-4 pr-1.5 md:flex">
-          <div className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-electric to-cyanx text-sm font-black text-white">
+        <div className="hidden h-9 items-center gap-2 rounded-xl border border-border bg-slate-950/35 py-1 pl-3 pr-1.5 md:flex">
+          <div className="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-electric to-cyanx text-xs font-bold text-white">
             {initials}
           </div>
           <div className="leading-tight">
-            <strong className="block max-w-36 truncate text-sm font-black">{profile.fullName}</strong>
-            <span className="text-xs font-medium text-muted">{profile.roleLabel}</span>
+            <strong className="block max-w-28 truncate text-xs font-bold">{profile.fullName}</strong>
+            <span className="text-[11px] text-muted">{profile.roleLabel}</span>
           </div>
         </div>
 
