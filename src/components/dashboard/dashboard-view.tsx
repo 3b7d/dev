@@ -1,6 +1,6 @@
 import { Activity, AlertTriangle, ArrowUpLeft, CheckCircle2, Circle, FileText, FolderGit2, GraduationCap, ListTodo, PlayCircle, Rocket } from "lucide-react";
 import type { ReactNode } from "react";
-import { activityFeed, dashboardMetrics, focusItems, kanbanColumns, taskTable } from "@/lib/mock-data";
+import { activityFeed, focusItems, kanbanColumns, taskTable } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 const toneClasses = {
@@ -16,14 +16,15 @@ const kpiIcons = [ListTodo, PlayCircle, CheckCircle2, FolderGit2, AlertTriangle]
 
 type DashboardViewProps = {
   activeProjects?: Array<{ id: string; name: string; description: string | null; progress: number; dueDate: string | null }> ;
+  activeProjectsCount?: number;
   ongoingCourses?: Array<{ id: string; title: string; provider: string | null; progress: number }> ;
 };
 
-export function DashboardView({ activeProjects = [], ongoingCourses = [] }: DashboardViewProps) {
+export function DashboardView({ activeProjects = [], activeProjectsCount = 0, ongoingCourses = [] }: DashboardViewProps) {
   return (
     <div className="space-y-3.5 lg:space-y-4">
       <HeroSection />
-      <MetricGrid />
+      <MetricGrid activeProjectsCount={activeProjectsCount} />
       <div className="grid gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(21rem,0.8fr)]">
         <TasksAttentionPanel />
         <ActivityPanel />
@@ -69,11 +70,20 @@ function HeroSection() {
   );
 }
 
-function MetricGrid() {
+const dashboardMetrics = [
+  { label: "مهام اليوم", value: "14", trend: "+18%", tone: "cyan" },
+  { label: "قيد التنفيذ", value: "6", trend: "+7%", tone: "blue" },
+  { label: "مشاريع نشطة", trend: "Live", tone: "green" },
+  { label: "عوائق مفتوحة", value: "1", trend: "مهم", tone: "amber" },
+] as const;
+
+function MetricGrid({ activeProjectsCount }: { activeProjectsCount: number }) {
   return (
     <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
       {dashboardMetrics.slice(0, 5).map((metric, index) => {
         const Icon = kpiIcons[index] ?? Activity;
+        const value = metric.label === "مشاريع نشطة" ? String(activeProjectsCount) : metric.value;
+
         return (
           <article key={metric.label} className="glass-card rounded-2xl p-4">
             <div className="flex items-center justify-between gap-3">
@@ -83,7 +93,7 @@ function MetricGrid() {
               <span className={cn("badge min-h-6 px-2.5 text-[11px]", toneClasses[metric.tone as Tone])}>{metric.trend}</span>
             </div>
             <p className="mt-4 text-xs text-muted">{metric.label}</p>
-            <strong className="mt-1.5 block text-2xl font-bold">{metric.value}</strong>
+            <strong className="mt-1.5 block text-2xl font-bold">{value}</strong>
           </article>
         );
       })}

@@ -6,12 +6,15 @@ import { createClient } from "@/lib/supabase/server";
 export default async function HomePage() {
   const profile = await requireProfile();
   const supabase = await createClient();
-  const { data: activeProjects } = await supabase
-    .from("projects")
-    .select("id,name,description,progress,status,due_date")
-    .eq("status", "active")
-    .order("updated_at", { ascending: false })
-    .limit(3);
+  const [{ data: activeProjects }, { count: activeProjectsCount }] = await Promise.all([
+    supabase
+      .from("projects")
+      .select("id,name,description,progress,status,due_date")
+      .eq("status", "active")
+      .order("updated_at", { ascending: false })
+      .limit(3),
+    supabase.from("projects").select("id", { count: "exact", head: true }).eq("status", "active"),
+  ]);
   const { data: ongoingCourses } = await supabase
     .from("courses")
     .select("id,title,provider,progress,status")
@@ -29,6 +32,7 @@ export default async function HomePage() {
           progress: project.progress ?? 0,
           dueDate: project.due_date,
         }))}
+        activeProjectsCount={activeProjectsCount ?? 0}
         ongoingCourses={(ongoingCourses ?? []).map((course) => ({
           id: course.id,
           title: course.title,
