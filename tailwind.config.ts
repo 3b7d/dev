@@ -11,30 +11,29 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#070B14",
-        foreground: "#F8FAFC",
-        muted: "#94A3B8",
-        electric: "#38BDF8",
-        cyanx: "#38BDF8",
+        background: "rgb(var(--background) / <alpha-value>)",
+        foreground: "rgb(var(--foreground) / <alpha-value>)",
+        muted: "rgb(var(--muted-foreground) / <alpha-value>)",
+        "muted-foreground": "rgb(var(--muted-foreground) / <alpha-value>)",
+        electric: "rgb(var(--primary) / <alpha-value>)",
+        cyanx: "rgb(var(--primary) / <alpha-value>)",
+        primary: "rgb(var(--primary) / <alpha-value>)",
         success: "#10B981",
-        border: "rgba(148, 163, 184, 0.14)",
-        card: "rgba(15, 23, 42, 0.82)",
+        border: "rgb(var(--border) / 0.9)",
+        card: "rgb(var(--card) / <alpha-value>)",
+        "surface-secondary": "rgb(var(--surface-secondary) / <alpha-value>)",
       },
       fontFamily: {
         sans: ["var(--font-tajawal)", "ui-sans-serif", "system-ui"],
       },
       boxShadow: {
-        glow: "0 0 42px rgba(34, 211, 238, 0.18)",
-        premium: "0 24px 90px rgba(0, 0, 0, 0.38)",
+        glow: "0 0 18px rgba(37, 99, 235, 0.14)",
+        premium: "0 16px 36px rgba(15, 23, 42, 0.08)",
       },
       borderRadius: {
         xl: "1rem",
         "2xl": "1.25rem",
         "3xl": "1.75rem",
-      },
-      backgroundImage: {
-        "tech-grid":
-          "linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px)",
       },
     },
   },

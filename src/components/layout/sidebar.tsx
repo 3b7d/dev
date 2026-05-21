@@ -19,7 +19,7 @@ export function Sidebar({ open, onClose, profile }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "glass-panel fixed bottom-3 right-3 top-3 z-40 flex w-[min(17rem,calc(100vw-1.5rem))] flex-col rounded-2xl px-3 py-4 transition duration-300 lg:sticky lg:top-5 lg:z-10 lg:h-[calc(100vh-2.5rem)] lg:w-auto lg:translate-x-0",
+        "fixed bottom-3 right-3 top-3 z-40 flex w-[min(17rem,calc(100vw-1.5rem))] flex-col rounded-2xl border border-border bg-card px-3 py-4 shadow-sm transition duration-300 lg:sticky lg:top-5 lg:z-10 lg:h-[calc(100vh-2.5rem)] lg:w-auto lg:translate-x-0",
         open ? "translate-x-0" : "translate-x-[calc(100%+2rem)]",
       )}
     >
@@ -57,8 +57,8 @@ export function Sidebar({ open, onClose, profile }: SidebarProps) {
           const className = cn(
             "group relative flex min-h-10 items-center gap-2.5 rounded-xl border px-3 text-sm font-semibold transition",
             active
-              ? "border-cyanx/35 bg-cyanx/10 text-foreground"
-              : "border-transparent text-muted hover:border-border hover:bg-slate-950/35 hover:text-foreground",
+              ? "border-primary/35 bg-primary/10 text-foreground"
+              : "border-transparent text-muted hover:border-border hover:bg-surface-secondary hover:text-foreground",
             disabled && "cursor-not-allowed opacity-55",
           );
 
@@ -84,7 +84,7 @@ export function Sidebar({ open, onClose, profile }: SidebarProps) {
         })}
       </nav>
 
-      <div className="mt-auto rounded-2xl border border-border bg-slate-950/40 p-3">
+      <div className="mt-auto rounded-2xl border border-border bg-surface-secondary p-3">
         <div className="flex items-center justify-between text-xs">
           <span className="text-muted">صحة الفريق</span>
           <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-200">
@@ -95,7 +95,7 @@ export function Sidebar({ open, onClose, profile }: SidebarProps) {
           <strong className="text-xl font-bold">92%</strong>
           <span className="h-2 w-2 rounded-full bg-success" />
         </div>
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-700/40">
+        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border/70">
           <div className="h-full w-[92%] rounded-full bg-gradient-to-l from-success to-cyanx" />
         </div>
       </div>
