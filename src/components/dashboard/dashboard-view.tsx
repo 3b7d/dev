@@ -1,6 +1,5 @@
-import { Activity, AlertTriangle, ArrowUpLeft, CheckCircle2, Circle, FileText, FolderGit2, GraduationCap, ListTodo, PlayCircle, Rocket } from "lucide-react";
+import { Activity, AlertTriangle, ArrowUpLeft, CheckCircle2, FileText, FolderGit2, GraduationCap, ListTodo, PlayCircle, Rocket } from "lucide-react";
 import type { ReactNode } from "react";
-import { activityFeed, focusItems, kanbanColumns, taskTable } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 const toneClasses = {
@@ -71,10 +70,10 @@ function HeroSection() {
 }
 
 const dashboardMetrics = [
-  { label: "مهام اليوم", value: "14", trend: "+18%", tone: "cyan" },
-  { label: "قيد التنفيذ", value: "6", trend: "+7%", tone: "blue" },
+  { label: "مهام اليوم", value: "0", trend: "0%", tone: "cyan" },
+  { label: "قيد التنفيذ", value: "0", trend: "0%", tone: "blue" },
   { label: "مشاريع نشطة", trend: "Live", tone: "green" },
-  { label: "عوائق مفتوحة", value: "1", trend: "مهم", tone: "amber" },
+  { label: "عوائق مفتوحة", value: "0", trend: "0", tone: "amber" },
 ] as const;
 
 function MetricGrid({ activeProjectsCount }: { activeProjectsCount: number }) {
@@ -109,14 +108,8 @@ function AchievementsPanel() {
   return (
     <section className="glass-card">
       <PanelHeader eyebrow="Achievements" title="آخر الإنجازات" />
-      <div className="grid gap-3 lg:grid-cols-3">
-        {kanbanColumns[2].cards.slice(0, 3).map((card) => (
-          <article key={card.title} className="rounded-2xl border border-border bg-slate-950/35 p-4">
-            <span className={cn("badge", toneClasses[card.tone as Tone])}>{card.tag}</span>
-            <h3 className="mt-3 text-sm font-bold">{card.title}</h3>
-            <p className="mt-2 text-xs leading-6 text-muted">تم توثيق التقدم ضمن خطة الفريق الأسبوعية.</p>
-          </article>
-        ))}
+      <div className="rounded-2xl border border-dashed border-border p-5 text-center text-sm text-muted">
+        لا توجد إنجازات لعرضها حاليًا.
       </div>
     </section>
   );
@@ -146,17 +139,16 @@ function OngoingCoursesPanel({ courses }: { courses: NonNullable<DashboardViewPr
   );
 }
 
-function TasksTable() { return <section className="glass-card"><PanelHeader eyebrow="Priority" title="مهام تحتاج انتباه" /><div className="space-y-2.5">{taskTable.slice(0,5).map((task)=><article key={task.title} className="rounded-2xl border border-border bg-slate-950/30 p-3.5"><div className="flex items-center justify-between gap-3"><strong className="text-sm font-bold">{task.title}</strong><span className="badge border-cyanx/25 bg-cyanx/10 text-cyan-100">{task.status}</span></div><p className="mt-1.5 text-xs text-muted">{task.description}</p></article>)}</div></section>; }
+function TasksTable() {
+  return <section className="glass-card"><PanelHeader eyebrow="Priority" title="مهام تحتاج انتباه" /><div className="rounded-2xl border border-dashed border-border p-5 text-center text-sm text-muted">لا توجد مهام تحتاج انتباه حاليًا.</div></section>;
+}
 
 function ActivityPanel() {
   return (
     <aside className="glass-card">
       <PanelHeader eyebrow="Activity" title="آخر الإنجازات" />
-      <div className="space-y-2.5">
-        {activityFeed.slice(0, 4).map((item) => {
-          const Icon = item.icon;
-          return <div key={item.title} className="flex gap-3 rounded-xl border border-border bg-slate-950/30 p-3"><Icon className="mt-0.5 h-4 w-4 text-cyanx" /><div><strong className="block text-sm font-bold">{item.title}</strong><span className="text-xs text-muted">{item.time}</span></div></div>;
-        })}
+      <div className="rounded-2xl border border-dashed border-border p-5 text-center text-sm text-muted">
+        لا توجد نشاطات حديثة لعرضها حاليًا.
       </div>
     </aside>
   );
@@ -167,11 +159,9 @@ function ManagerQuickReport() {
     <section className="glass-card">
       <PanelHeader eyebrow="Manager" title="تقرير سريع للمدير" action={<button className="soft-button h-9 px-3 text-xs">عرض التفاصيل <ArrowUpLeft className="h-4 w-4" /></button>} />
       <div className="space-y-3 text-sm text-muted">
-        <p>المهام الحرجة تحت المتابعة، والمشاريع النشطة تتحرك ضمن الخطة الحالية.</p>
-        <div className="rounded-2xl border border-border bg-slate-950/30 p-3">
-          {focusItems.slice(0, 3).map((item) => (
-            <div key={item.title} className="flex items-center gap-2 py-1"><Circle className={cn("h-3.5 w-3.5", item.done ? "fill-emerald-400 text-emerald-400" : "text-muted")} /><span>{item.title}</span></div>
-          ))}
+        <p>لا توجد بيانات كافية لإعداد التقرير السريع حاليًا.</p>
+        <div className="rounded-2xl border border-dashed border-border p-4 text-center text-xs">
+          Empty State
         </div>
       </div>
     </section>
